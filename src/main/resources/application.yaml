@@ -1,0 +1,22 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: 'jdbc:postgresql://localhost:56721/tink'
+    username: 'user'
+    password: 'password'
+  jpa:
+    properties:
+      hibernate:
+        dialect: 'org.hibernate.dialect.PostgreSQLDialect'
+        format_sql: true
+        hbm2ddl:
+          auto: update
+        show_sql: true
+  liquibase:
+    change-log: classpath:/db.changelog/main-changelog.yaml
+  graphql:
+    graphiql:
+      enabled: true
+    path: /graphql
+

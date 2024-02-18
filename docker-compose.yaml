@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:14.5-alpine
+    container_name: hw-1
+    ports:
+      - "56721:5432"
+    environment:
+      POSTGRES_DB: tink
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    volumes:
+      - hw-1:/var/lib/postgresql/data
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tink-hw-1
+    ports:
+      - "8081:8081"
+    environment:
+      - SERVER_PORT=8081
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/tink
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+    depends_on:
+      - postgres
+
+volumes:
+  hw-1:
